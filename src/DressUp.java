@@ -4,12 +4,16 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -62,7 +66,11 @@ public class DressUp {
     Clothes topHat = new Clothes(5, 0, 2, "/images/tiny top hat.png");
 
     //shirt panel and buttons
-    JPanel clothesButtonPanel = new JPanel();
+    Image woodBackground = new ImageIcon(getClass().getResource("/images/wood-log-background.png")).getImage();
+    ImagePanel clothesButtonPanel = new ImagePanel(woodBackground);
+    // JPanel clothesButtonPanel = new JPanel();
+    // ImageIcon woodBackground = new ImageIcon(getClass().getResource("/images/wood-log-background.png"));
+    // JLabel clothesButtonsLabel = new JLabel(woodBackground);
     JButton[] clothesButtons = new JButton[6];
 
     //next and done buttons
@@ -190,12 +198,12 @@ public class DressUp {
             //System.out.println(fancyTotal);
             if(fancyTotal > 8) {
                 gameOverLabel.setText("very FANCY!");
-                speechLabel.setText("i look so DAPPER!");
+                speechLabel.setText("i look so dapper!");
                 }
             else{
                 gameOverLabel.setText("not FANCY enough!");
                 speechLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 19));
-                speechLabel.setText("<html>i was supposed to go a wedding<br/> bro... MY WEDDING</html>");
+                speechLabel.setText("i look too casual :(");
             }
         }
         else if (styleType == "CUTE"){
@@ -203,12 +211,12 @@ public class DressUp {
             cuteTotal = (activeShirt.cuteAmt + activePants.cuteAmt + activeHat.cuteAmt);
             if(cuteTotal > 8) {
                 gameOverLabel.setText("very CUTE!");
-                speechLabel.setText("i feel so ADORABLE!!");
+                speechLabel.setText("i feel so adorable!!");
                 }
             else {
                 gameOverLabel.setText("not CUTE enough!");
                 speechLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 18));
-                speechLabel.setText("<html>how tf am i supposed to go to<br/>my playdate looking like this</html>");                
+                speechLabel.setText("i dont look adorable at all :(");                
             }
         }
         else{
@@ -216,12 +224,12 @@ public class DressUp {
             coolTotal = (activeShirt.coolAmt + activePants.coolAmt + activeHat.coolAmt);
             if(coolTotal > 8) {
                 gameOverLabel.setText("very COOL!");
-                speechLabel.setText("i look so RAD");
+                speechLabel.setText("i look so rad");
                 }
             else{ 
                 gameOverLabel.setText("not COOL enough!");
                 speechLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-                speechLabel.setText("<html>how will i ever fit in<br/>with the cool kids now :(</html>");
+                speechLabel.setText("i feel so uncool :(");
             }
         }
 
@@ -293,23 +301,29 @@ public class DressUp {
         
         //add button panel
         clothesButtonPanel.setBounds(400, 10, 365, 540);
+        clothesButtonPanel.setOpaque(false);
         gameBackground.add(clothesButtonPanel, BorderLayout.EAST);
 
         //adds clothes buttons
         clothesButtonPanel.setLayout(new GridLayout(3, 2));
         for (int i = 0; i < 6; i ++){
             JButton tile = new JButton();
-            tile.setBackground(new Color(183, 203, 237));
+            //set background color of button
+            // tile.setBackground("");
             clothesButtons[i] = tile;
             clothesButtonPanel.add(tile);
-            tile.setFocusable(false); //hides square around image when clicked
-            tile.setOpaque(true);
+            tile.setOpaque(false);
+            tile.setContentAreaFilled(false);
+            tile.setBorderPainted(false);
+            tile.setFocusPainted(false);
         }
 
         //options and done buttons
         for (int i = 0; i < 4; i++){
             JButton tile = new JButton();
-            tile.setBackground(new Color(200, 203, 250));
+            tile.setBackground(new Color(245, 209, 193));
+            Border brownBorder = new LineBorder(new Color(87, 55, 41), 3);
+            tile.setBorder(brownBorder);
             optionsButtons[i] = tile;
             gameBackground.add(tile);
             tile.setBounds(435 + (i * 80), 580, 60, 45);
@@ -422,6 +436,7 @@ public class DressUp {
         frame.repaint();
 
     }
+
 
     
     //if one of the shirts are clicked
